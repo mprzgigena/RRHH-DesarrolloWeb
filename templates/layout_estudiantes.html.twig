@@ -1,0 +1,16 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{% block layout_title %}Layout de Estudiantes{% endblock %}{% endblock %}
+
+{% block body %}
+    <header>
+        <h2>Sistema de Estudiantes</h2>
+    </header>
+
+    <div class="container">
+        {% block contenido_estudiantes %}
+            <p>Contenido genérico de estudiantes.</p>
+        {% endblock %}
+    </div>
+{% endblock %}

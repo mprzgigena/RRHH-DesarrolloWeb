@@ -4,7 +4,7 @@
 <head>
     <title>Página Principal de Ejercicios: MARIANO PÉREZ GIGENA</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
+        /* ... Estilos de los botones ... */
         .ejercicio-btn {
             display: inline-block;
             padding: 10px 20px;
@@ -24,69 +24,93 @@
 </head>
 <body>
 
-    <h1>Ejercicios Prácticos Desarrollo Web</h1>
+    <h1>Ejercicios Prácticos Desarrollo Web</h1>
 
-    <h2>Hacer click para dirigirse a cada trabajo</h2>
-
-    <h3>Practico 1: Saludo y Despedida</h3>
-    {# 
-        Enlace al Ejercicio 1 de Saludo. 
-    #}
-    <a href="{{ path('app_saludo', {'nombre': nombre}) }}" class="ejercicio-btn">
-        Ir a Trabajo Práctico 1 (Saludo)
-    </a>
-
-    {# 
-        Enlace al Ejercicio 1 de Saludo.
-    #}
-    <a href="{{ path('app_despedida', {'nombre': nombre}) }}" class="ejercicio-btn">
-        Ir a Trabajo Práctico 1 (Despedida)
-    </a>
+    <h2>Hacer click para dirigirse a cada trabajo</h2>
 
     <hr>
+        <h3>Practico 1: Routing en Symfony</h3>
+    
+    <h4>Saludo y Despedida</h4>
+    {# 
+        Enlace al Ejercicio 1 de Saludo. 
+    #}
+    <a href="{{ path('app_saludo', {'nombre': nombre}) }}" class="ejercicio-btn">
+        Ir a Trabajo Práctico 1 (Saludo)
+    </a>
 
-    <h3>Practico 1: Estado de Ánimo </h3>
+    {# 
+        Enlace al Ejercicio 1 de Saludo.
+    #}
+    <a href="{{ path('app_despedida', {'nombre': nombre}) }}" class="ejercicio-btn">
+        Ir a Trabajo Práctico 1 (Despedida)
+    </a>
+
+ 
+
+    <h4>Estado de Ánimo </h4>
+    
+    <a href="{{ path('app_estado_animo', {'nombre': nombre, 'estado': 'contento'}) }}" class="ejercicio-btn">
+        /estado/{{ nombre }}/contento
+    </a>
+    {# Sin estado opcional #}
+    <a href="{{ path('app_estado_animo', {'nombre': nombre}) }}" class="ejercicio-btn">
+        /estado/{{ nombre }} (Sin estado)
+    </a>
+
+    
+
+    <h4>Mensaje Aleatorio</h4>
+    <a href="{{ path('app_aleatorio') }}" class="ejercicio-btn">
+        Ir a /aleatorio
+    </a>
+
+    
+
+    <h4>Formulario de Registro</h4>
+    <a href="{{ path('app_registro') }}" class="ejercicio-btn">
+        Ir a /registro
+    </a>
+
+    
+
+    <h4>API JSON (Usuario ficticio)</h4>
+    <p>La ruta requiere un ID de usuario.</p>
+    <a href="{{ path('api_usuario', {'id': 123}) }}" class="ejercicio-btn">
+        Ir a /api/usuario/123
+    </a>
+
+ 
+
+    <h4>Condicionales (Mayoría de edad)</h4>
+    <p>La ruta requiere una edad.</p>
+    <a href="{{ path('app_mayoria_edad', {'edad': 25}) }}" class="ejercicio-btn">
+        /mayoria-edad/25 (Mayor)
+    </a>
+    <a href="{{ path('app_mayoria_edad', {'edad': 15}) }}" class="ejercicio-btn">
+        /mayoria-edad/15 (Menor)
+    </a>
+
+    <hr>
+
+        <h3>Practico 2: Motor de Plantillas Twig</h3>
+    
+    <h4>Listado Estudiantes (Ejercicio 1, 2 y 3)</h4>
+    <a href="{{ path('app_estudiantes') }}" class="ejercicio-btn">
+        Ver listado de estudiantes
+    </a>
     
-    <a href="{{ path('app_estado_animo', {'nombre': nombre, 'estado': 'contento'}) }}" class="ejercicio-btn">
-        /estado/{{ nombre }}/contento
-    </a>
-    {# Sin estado opcional #}
-    <a href="{{ path('app_estado_animo', {'nombre': nombre}) }}" class="ejercicio-btn">
-        /estado/{{ nombre }} (Sin estado)
-    </a>
+    <h4>Cursos agrupados (Ejercicio 4)</h4>
+    <a href="{{ path('ver_cursos') }}" class="ejercicio-btn">
+        Ver cursos agrupados
+    </a>
+    
+    <h4>Herencia vertical (Ejercicio 4 - Parte iii)</h4>
+    <a href="{{ path('app_estudiantes_lista') }}" class="ejercicio-btn">
+        Ver lista usando herencia vertical
+    </a>
 
     <hr>
-
-    <h3>Practico 1: Mensaje Aleatorio</h3>
-    <a href="{{ path('app_aleatorio') }}" class="ejercicio-btn">
-        Ir a /aleatorio
-    </a>
-
-    <hr>
-
-    <h3>Practico 1: Formulario de Registro</h3>
-    <a href="{{ path('app_registro') }}" class="ejercicio-btn">
-        Ir a /registro
-    </a>
-
-    <hr>
-
-    <h3>Practico 1: API JSON (Usuario ficticio)</h3>
-    <p>La ruta requiere un ID de usuario.</p>
-    <a href="{{ path('api_usuario', {'id': 123}) }}" class="ejercicio-btn">
-        Ir a /api/usuario/123
-    </a>
-
-    <hr>
-
-    <h3>Practico 1: Condicionales (Mayoría de edad)</h3>
-    <p>La ruta requiere una edad.</p>
-    <a href="{{ path('app_mayoria_edad', {'edad': 25}) }}" class="ejercicio-btn">
-        /mayoria-edad/25 (Mayor)
-    </a>
-    <a href="{{ path('app_mayoria_edad', {'edad': 15}) }}" class="ejercicio-btn">
-        /mayoria-edad/15 (Menor)
-    </a>
 
 </body>
 </html>

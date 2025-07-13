@@ -1,0 +1,13 @@
+{% extends 'layout_estudiantes.html.twig' %}
+
+{% block layout_title %}Lista Detallada (Ejercicio 4){% endblock %}
+
+{% block contenido_estudiantes %}
+    <h2>Listado Detallado de Estudiantes (Herencia Vertical)</h2>
+    <ul>
+      
+        {% for estudiante in estudiantes %}
+            <li><strong>{{ estudiante.nombre }}</strong> - Nota: {{ estudiante.nota }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

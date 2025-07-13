@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cursos y Estudiantes (Ejercicio 4){% endblock %}
+
+{% block body %}
+    <h1>Estudiantes por Curso</h1>
+
+   
+    {% for nombreCurso, estudiantesCurso in cursos %}
+        <h2>Curso: {{ nombreCurso }}</h2>
+        <ul>
+            {% for estudiante in estudiantesCurso %}
+                <li>{{ estudiante.nombre }} - Nota: {{ estudiante.nota }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay cursos registrados.</p>
+    {% endfor %}
+{% endblock %}

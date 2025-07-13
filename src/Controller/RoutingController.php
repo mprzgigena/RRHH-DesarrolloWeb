@@ -30,8 +30,8 @@ class RoutingController extends AbstractController
         $mensaje = "¡Hola, $nombre! Bienvenido/a al sistema.";
         
         
-        $urlDespedida = $this->generateUrl('app_despedida', ['nombre' => $nombre]);
-        $enlace = "<a href='$urlDespedida'>Ir a despedida</a>";
+        $urlDespedida = $this->generateUrl('app_saludo', ['nombre' => $nombre]);
+        $enlace = "<a href='$urlDespedida'>Ir a saludo</a>";
 
         return new Response("$mensaje<br><br>$enlace");
     }
@@ -43,8 +43,8 @@ class RoutingController extends AbstractController
         $mensaje = "Hasta luego, $nombre! Nos vemos pronto.";
         
        
-        $urlSaludo = $this->generateUrl('app_saludo', ['nombre' => $nombre]);
-        $enlace = "<a href='$urlSaludo'>Volver al saludo</a>";
+        $urlSaludo = $this->generateUrl('app_despedida', ['nombre' => $nombre]);
+        $enlace = "<a href='$urlSaludo'>Volver al despedida</a>";
 
         return new Response("$mensaje<br><br>$enlace");
     }

@@ -1,0 +1,75 @@
+{# templates/peliculas/listado.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block body %}
+    <style>
+        .styled-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+        }
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+        .no-results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+    </style>
+
+    <h1>{{ titulo }}</h1>
+
+    {# Verificar si hay películas para mostrar #}
+    {% if peliculas is not empty %}
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Año Estreno</th>
+                    <th>Director</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pelicula in peliculas %}
+                    <tr>
+                        <td>{{ pelicula.nombre }}</td>
+                        <td>{{ pelicula.añoEstreno }}</td>
+                        {# Accedemos al director a través de la relación #}
+                        <td>{{ pelicula.director.nombre }}</td> 
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {# Mostrar mensaje si no hay resultados #}
+        <div class="no-results">
+            <p>{{ no_resultados_mensaje|default('No se encontraron resultados.') }}</p>
+        </div>
+    {% endif %}
+
+    <a href="{{ path('app_peliculas_listado') }}">Volver al listado completo</a>
+{% endblock %}

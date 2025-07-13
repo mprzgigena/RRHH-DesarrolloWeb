@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block body %}
+    <h1>{{ titulo }}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Año de Estreno</th>
+                <th>Director</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pelicula in peliculas %}
+            <tr>
+                <td>{{ pelicula.pelicula }}</td>
+                <td>{{ pelicula.añoEstreno }}</td>
+                {# Acceso al director a través de la relación que acabamos de crear #}
+                <td>{{ pelicula.director.nombreDirector }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3">No se encontraron películas.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+   <a href="{{ path('app_homepage') }}">Volver al inicio</a>
+{% endblock %}

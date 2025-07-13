@@ -123,6 +123,41 @@
     <a href="{{ path('app_fecha_actual') }}" class="ejercicio-btn">
         Ver Fecha Actual Formateada
     </a>
+
+    <hr>
+
+<h3>Practico 4: Doctrine y Catálogo de Películas</h3>
+<h4>Listado, Búsqueda y Filtrado</h4>
+
+<a href="{{ path('app_peliculas_listado') }}" class="ejercicio-btn">
+    Listar todas las películas
+</a>
+
+    <hr>
+
+    <p>
+        Ejemplos de filtrado:
+    </p>
+
+    <a href="{{ path('app_peliculas_estreno', {'año': 1993}) }}" class="ejercicio-btn">
+        Filtrar por año 1993
+    </a>
+    <a href="{{ path('app_peliculas_estreno', {'año': 2003}) }}" class="ejercicio-btn">
+        Filtrar por año 2003
+    </a>
+    <a href="{{ path('app_peliculas_estreno', {'año': 2024}) }}" class="ejercicio-btn">
+        Filtrar por año 2024 (Sin resultados)
+    </a>
+
+    <a href="{{ path('app_peliculas_letra', {'letra': 'P'}) }}" class="ejercicio-btn">
+        Buscar por letra "P"
+    </a>
+    <a href="{{ path('app_peliculas_letra', {'letra': 'Z'}) }}" class="ejercicio-btn">
+        Buscar por letra "Z" (Sin resultados)
+    </a>
+
+  <hr>
+  
     
 </body>
 </html>

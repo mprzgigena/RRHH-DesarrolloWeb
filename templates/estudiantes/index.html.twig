@@ -7,7 +7,7 @@
 {% block body %}
     <h1>Listado de Estudiantes (Ejercicio 1)</h1>
 
-    {# Ejercicio 2: Si el array 'estudiantes' está vacío, incluir la alerta. Asegúrate de tener el archivo _alerta.html.twig #}
+   
     {% if estudiantes is empty %}
         {% include '_alerta.html.twig' with { 'mensaje': 'No hay estudiantes registrados.' } %}
     {% else %}

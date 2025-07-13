@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,8 +26,8 @@ class PeliculasController extends AbstractController
     #[Route('/peliculas/estreno/{año}', name: 'app_peliculas_estreno')]
     public function filtrarPorAnio(PeliculaRepository $peliculaRepository, int $año): Response
     {
-        // Usamo findBy para filtrar por el campo 'año_estreno'
-        $peliculas = $peliculaRepository->findBy(['año_estreno' => $año]);
+        //  Usamos el nombre de la propiedad PHP 'añoEstreno'
+        $peliculas = $peliculaRepository->findBy(['añoEstreno' => $año]);
 
         return $this->render('peliculas/listado.html.twig', [
             'peliculas' => $peliculas,
@@ -41,10 +40,9 @@ class PeliculasController extends AbstractController
     #[Route('/peliculas/letra/{letra}', name: 'app_peliculas_letra')]
     public function buscarPorLetra(PeliculaRepository $peliculaRepository, string $letra): Response
     {
-        // Validamos que la letra sea una sola y sea alfabética
-        // Usaremos Query Builder para hacer la búsqueda 'LIKE letra%'
+        //  Usamos el nombre de la propiedad PHP 'pelicula' en el Query Builder
         $peliculas = $peliculaRepository->createQueryBuilder('p')
-            ->where('p.nombre LIKE :letra')
+            ->where('p.pelicula LIKE :letra') 
             ->setParameter('letra', $letra . '%')
             ->getQuery()
             ->getResult();

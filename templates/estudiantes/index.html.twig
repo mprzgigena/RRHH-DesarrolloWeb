@@ -1,20 +1,41 @@
+{# templates/estudiantes/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EstudiantesController!{% endblock %}
+{% block title %}Listado de Estudiantes{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Listado de Estudiantes (Ejercicio 1)</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/M/Documents/Desarrollo Web - Prof MirandaC/Nueva carpeta/RRHH/src/Controller/EstudiantesController.php</code></li>
-        <li>Your template at <code>C:/Users/M/Documents/Desarrollo Web - Prof MirandaC/Nueva carpeta/RRHH/templates/estudiantes/index.html.twig</code></li>
-    </ul>
-</div>
+    {# Ejercicio 2: Si el array 'estudiantes' está vacío, incluir la alerta. Asegúrate de tener el archivo _alerta.html.twig #}
+    {% if estudiantes is empty %}
+        {% include '_alerta.html.twig' with { 'mensaje': 'No hay estudiantes registrados.' } %}
+    {% else %}
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Nota</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {# Ejercicio 1: Recorrer el array de estudiantes con 'for' #}
+                {% for estudiante in estudiantes %}
+                    <tr>
+                        <td>{{ estudiante.nombre }}</td>
+                        <td>{{ estudiante.nota }}</td>
+                        <td>
+                            {# Ejercicio 1: Usar 'if' para verificar si está aprobado (nota >= 6) #}
+                            {% if estudiante.nota >= 6 %}
+                                <span style="color: green;">Aprobado</span>
+                            {% else %}
+                                <span style="color: red;">Desaprobado</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}

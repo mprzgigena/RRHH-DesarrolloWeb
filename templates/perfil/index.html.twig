@@ -1,0 +1,17 @@
+{# templates/perfil/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Página de Perfil{% endblock %}
+
+{% block body %}
+    <h1>Información sobre mi perfil.</h1>
+    <p>Página de perfil accesible solo para ROLE_ADMIN.</p>
+    
+    <p>
+        ¡Bienvenido, administrador!
+        {# Puedes añadir lógica para mostrar el email del usuario logueado: #}
+        {# <strong>Email:</strong> {{ app.user.userIdentifier }} #}
+    </p>
+
+    <a href="{{ path('app_logout') }}">Cerrar sesión</a>
+{% endblock %}

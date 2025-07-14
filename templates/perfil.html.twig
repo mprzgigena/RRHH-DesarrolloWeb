@@ -1,0 +1,11 @@
+{# templates/perfil.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block body %}
+    <h1>{{ titulo }}</h1>
+    <p>{{ contenido|raw }}</p>
+
+    <a href="{{ path('app_logout') }}">Cerrar Sesión</a>
+{% endblock %}

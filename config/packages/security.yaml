@@ -1,37 +1,58 @@
+# config/packages/security.yaml
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        users_in_memory: { memory: null }
+        # 1. Configuración de proveedor: Cambiamos 'users_in_memory' a 'entity' para usar la tabla User.
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email # Usamos el email como nombre de usuario (username)
+        # used to reload user from session & other features (e.g. switch_user)
+    
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        
         main:
             lazy: true
-            provider: users_in_memory
+            # 2. Asignamos el proveedor 'app_user_provider' a este firewall.
+            provider: app_user_provider
+            
+            # 3. Configuración del formulario de login
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                # Redirección después del login exitoso, como en la captura de pantalla del profesor.
+                default_target_path: app_perfil
+                enable_csrf: true
+            
+            # Configuración para cerrar sesión
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-    # Easy way to control access for large sections of your site
+    # 4. Control de acceso: Añadimos las restricciones de acceso como en la captura de pantalla.
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # Acceso restringido a rutas de perfil/administración/reportes para ROLE_ADMIN
+        - { path: '^/perfil', roles: ROLE_ADMIN }
+        - { path: '^/asistencia/admin', roles: ROLE_ADMIN }
+        - { path: '^/register', roles: ROLE_ADMIN }
+        - { path: '^/reporte', roles: ROLE_ADMIN }
+        
+        # Otorga acceso a /area a usuarios con ROLE_USER (o ROLE_ADMIN)
+        - { path: '^/area', roles: ROLE_USER }
 
 when@test:
     security:
         password_hashers:
-            # By default, password hashers are resource intensive and take time. This is
-            # important to generate secure password hashes. In tests however, secure hashes
-            # are not important, waste resources and increase test times. The following
-            # reduces the work factor to the lowest possible values.
+            # ... (configuración para tests, sin cambios necesarios) ...
             Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
                 algorithm: auto
                 cost: 4 # Lowest possible value for bcrypt

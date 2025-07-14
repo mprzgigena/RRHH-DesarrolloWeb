@@ -1,0 +1,94 @@
+{# templates/departamento/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Crear Nuevo Departamento{% endblock %}
+
+{% block body %}
+    <h1>Crear Nuevo Departamento</h1>
+
+    {{ form_start(form) }}
+        
+       
+        <div class="departamento-fields">
+            {{ form_row(form.nombre) }}
+            {{ form_row(form.ubicacion) }}
+            {{ form_row(form.jefe) }}
+        </div>
+
+        <h3>Asignar Empleados</h3>
+        
+    
+        <ul id="empleados-list" 
+            data-prototype="{{ form_widget(form.empleados.vars.prototype)|e('html_attr') }}"
+            data-index="{{ form.empleados|length }}"
+        >
+          
+            {% for empleadoForm in form.empleados %}
+                <li class="empleado-item">
+                    {{ form_widget(empleadoForm) }}
+                    <button type="button" class="remove-empleado-btn">Eliminar Empleado</button>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <button type="button" id="add-empleado-btn" class="btn btn-primary">Agregar Empleado</button>
+        
+        <br>
+        <button type="submit" class="btn btn-success">Guardar Departamento</button>
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const list = document.querySelector('#empleados-list');
+            const addButton = document.querySelector('#add-empleado-btn');
+
+           
+            let index = list.dataset.index || list.children.length;
+
+        
+            function addFormToCollection() {
+              
+                let prototype = list.dataset.prototype;
+
+              
+                prototype = prototype.replace(/__name__/g, index);
+
+                
+                const newItem = document.createElement('li');
+                newItem.classList.add('empleado-item');
+                newItem.innerHTML = prototype;
+
+               
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.classList.add('remove-empleado-btn');
+                removeButton.textContent = 'Eliminar Empleado';
+                newItem.appendChild(removeButton);
+
+              
+                list.appendChild(newItem);
+
+              
+                index++;
+            }
+
+           
+            addButton.addEventListener('click', function() {
+                addFormToCollection();
+            });
+
+          
+            list.addEventListener('click', function(e) {
+                if (e.target && e.target.classList.contains('remove-empleado-btn')) {
+                    e.target.closest('.empleado-item').remove();
+                }
+            });
+        });
+    </script>
+{% endblock %}

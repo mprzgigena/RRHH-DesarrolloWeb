@@ -1,0 +1,53 @@
+{# templates/departamento/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de Departamentos{% endblock %}
+
+{% block body %}
+    <h1>Listado de Departamentos</h1>
+
+    <a href="{{ path('app_departamento_new') }}" class="btn btn-success">Crear Nuevo Departamento</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Ubicación</th>
+                <th>Jefe</th>
+                <th>Empleados Asociados</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for departamento in departamentos %}
+            <tr>
+                <td>{{ departamento.id }}</td>
+                <td>{{ departamento.nombre }}</td>
+                <td>{{ departamento.ubicacion ? departamento.ubicacion.ciudad : 'N/A' }}</td>
+                <td>
+                    {% if departamento.jefe %}
+                        {{ departamento.jefe.nombre }} {{ departamento.jefe.apellido }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>
+                    {# Iteramos sobre la colección de empleados para mostrarlos #}
+                    <ul>
+                        {% for empleado in departamento.empleados %}
+                            <li>{{ empleado.nombre }} {{ empleado.apellido }} ({{ empleado.email }})</li>
+                        {% else %}
+                            <li>No hay empleados asignados</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No se encontraron departamentos</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

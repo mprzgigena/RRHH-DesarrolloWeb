@@ -21,6 +21,11 @@ class Provincia
     #[ORM\ManyToOne(inversedBy: 'provincias')]
     private ?Pais $pais = null;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private ?int $poblacion = null;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $superficie = null;
     /**
      * @var Collection<int, Ubicacion>
      */
@@ -35,6 +40,30 @@ class Provincia
     public function __toString()
     {
         return $this->nombre;
+    }
+
+    public function getPoblacion(): ?int
+    {
+        return $this->poblacion;
+    }
+
+    public function setPoblacion(?int $poblacion): static
+    {
+        $this->poblacion = $poblacion;
+
+        return $this;
+    }
+
+    public function getSuperficie(): ?float
+    {
+        return $this->superficie;
+    }
+
+    public function setSuperficie(?float $superficie): static
+    {
+        $this->superficie = $superficie;
+
+        return $this;
     }
 
     public function getId(): ?int
@@ -87,7 +116,7 @@ class Provincia
     public function removeUbicacion(Ubicacion $ubicacion): static
     {
         if ($this->ubicacions->removeElement($ubicacion)) {
-            // set the owning side to null (unless already changed)
+           
             if ($ubicacion->getProvincia() === $this) {
                 $ubicacion->setProvincia(null);
             }

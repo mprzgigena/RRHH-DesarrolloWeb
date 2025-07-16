@@ -19,227 +19,274 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-       
-        $faker = Factory::create('es_ES'); 
+        $faker = Factory::create('es_ES');
 
       
-        $director1 = new Director();
-        $director1->setNombreDirector('Steven Spielberg');
-        $manager->persist($director1);
-
-        $director2 = new Director();
-        $director2->setNombreDirector('Quentin Tarantino');
-        $manager->persist($director2);
+        $paisArgentina = new Pais();
+        $paisArgentina->setNombre('Argentina');
+        $manager->persist($paisArgentina);
+        
+        
+        $paisEspana = new Pais();
+        $paisEspana->setNombre('España');
+        $manager->persist($paisEspana);
 
         
-        $pelicula1 = new Pelicula();
-       
-        $pelicula1->setPelicula('Jurassic Park'); 
-        $pelicula1->setAñoEstreno(1993);
-        $pelicula1->setDirector($director1);
-        $manager->persist($pelicula1);
+        $directorSpielberg = new Director();
+        $directorSpielberg->setNombreDirector('Steven Spielberg');
+        $manager->persist($directorSpielberg);
 
-        $pelicula2 = new Pelicula();
+        $directorTarantino = new Director();
+        $directorTarantino->setNombreDirector('Quentin Tarantino');
+        $manager->persist($directorTarantino);
+
        
-        $pelicula2->setPelicula('Pulp Fiction');
-        $pelicula2->setAñoEstreno(1994);
-        $pelicula2->setDirector($director2);
-        $manager->persist($pelicula2);
+        $manager->flush();
+
+       
+        $allPaises = [$paisArgentina, $paisEspana];
+        $allDirectores = [$directorSpielberg, $directorTarantino];
+
+       
+
+       
+        for ($i = 0; $i < 10; $i++) {
+            $pais = new Pais();
+            $pais->setNombre($faker->unique()->country());
+            $manager->persist($pais);
+            $allPaises[] = $pais; 
+        }
 
         
-        $pais1 = new Pais();
-        $pais1->setNombre('Argentina');
-        $manager->persist($pais1);
-        $this->addReference('pais_argentina', $pais1); 
-
-        $pais2 = new Pais();
-        $pais2->setNombre('España');
-        $manager->persist($pais2);
-        $this->addReference('pais_espana', $pais2); 
+        for ($i = 0; $i < 5; $i++) {
+            $director = new Director();
+            $director->setNombreDirector($faker->name());
+            $manager->persist($director);
+            $allDirectores[] = $director;
 
         
-        $provincia1 = new Provincia();
-        $provincia1->setNombre('Buenos Aires');
-        $provincia1->setPais($pais1);
-        $provincia1->setPoblacion($faker->numberBetween(3000000, 17000000));
-        $provincia1->setSuperficie($faker->randomFloat(2, 30000, 307000));
-        $manager->persist($provincia1);
-        $this->addReference('provincia_buenos_aires', $provincia1); 
-
-        $provincia2 = new Provincia();
-        $provincia2->setNombre('Córdoba');
-        $provincia2->setPais($pais1);
-        $provincia2->setPoblacion($faker->numberBetween(1000000, 4000000)); 
-        $provincia2->setSuperficie($faker->randomFloat(2, 50000, 166000)); 
-        $manager->persist($provincia2);
-        $this->addReference('provincia_cordoba', $provincia2);
-
-        $provincia3 = new Provincia();
-        $provincia3->setNombre('Madrid');
-        $provincia3->setPais($pais2);
-        $provincia3->setPoblacion($faker->numberBetween(3000000, 7000000)); 
-        $provincia3->setSuperficie($faker->randomFloat(2, 5000, 10000)); 
-        $manager->persist($provincia3);
-        $this->addReference('provincia_madrid', $provincia3);
-
-      
-        $puesto1 = new Puesto();
-        $puesto1->setNombre('Gerente');
-        $puesto1->setSalarioMinimo(50000);
-        $puesto1->setSalarioMaximo(100000);
-        $manager->persist($puesto1);
-        $this->addReference('puesto_gerente', $puesto1);
-
-        $puesto2 = new Puesto();
-        $puesto2->setNombre('Analista');
-        $puesto2->setSalarioMinimo(30000);
-        $puesto2->setSalarioMaximo(60000);
-        $manager->persist($puesto2);
-        $this->addReference('puesto_analista', $puesto2);
-
-        $puesto3 = new Puesto();
-        $puesto3->setNombre('Desarrollador');
-        $puesto3->setSalarioMinimo(40000);
-        $puesto3->setSalarioMaximo(80000);
-        $manager->persist($puesto3);
-        $this->addReference('puesto_desarrollador', $puesto3);
+        $manager->flush();
 
        
-        $ubicacion1 = new Ubicacion();
-        $ubicacion1->setCalle('Av. Corrientes 123');
-        $ubicacion1->setCodigoPostal('C1043AAB');
-        $ubicacion1->setCiudad('Buenos Aires');
-        $ubicacion1->setProvincia($provincia1);
-        $manager->persist($ubicacion1);
-        $this->addReference('ubicacion_buenos_aires', $ubicacion1);
+        $puestoGerente = new Puesto();
+        $puestoGerente->setNombre('Gerente');
+        $puestoGerente->setSalarioMinimo(50000);
+        $puestoGerente->setSalarioMaximo(100000);
+        $manager->persist($puestoGerente);
+        $this->addReference('puesto_gerente', $puestoGerente);
 
-        $ubicacion2 = new Ubicacion();
-        $ubicacion2->setCalle('C/ Gran Vía 45');
-        $ubicacion2->setCodigoPostal('28013');
-        $ubicacion2->setCiudad('Madrid');
-        $ubicacion2->setProvincia($provincia3);
-        $manager->persist($ubicacion2);
-        $this->addReference('ubicacion_madrid', $ubicacion2);
+        $puestoAnalista = new Puesto();
+        $puestoAnalista->setNombre('Analista');
+        $puestoAnalista->setSalarioMinimo(30000);
+        $puestoAnalista->setSalarioMaximo(60000);
+        $manager->persist($puestoAnalista);
+        $this->addReference('puesto_analista', $puestoAnalista);
 
-      
-        $empleado1 = new Empleado();
-        $empleado1->setNombre('Juan');
-        $empleado1->setApellido('Perez');
-        $empleado1->setEmail('juan.perez@empresa.com');
-        $empleado1->setTelefono(1123456789);
-        $empleado1->setFechaIngreso(new \DateTime('2020-01-15'));
-        $empleado1->setSalario(80000);
-        $empleado1->setComision(0);
-        $empleado1->setPuesto($puesto1);
-        $manager->persist($empleado1);
-        $this->addReference('empleado-juan', $empleado1);
+        $puestoDesarrollador = new Puesto();
+        $puestoDesarrollador->setNombre('Desarrollador');
+        $puestoDesarrollador->setSalarioMinimo(40000);
+        $puestoDesarrollador->setSalarioMaximo(80000);
+        $manager->persist($puestoDesarrollador);
+        $this->addReference('puesto_desarrollador', $puestoDesarrollador);
 
-        $empleado2 = new Empleado();
-        $empleado2->setNombre('Maria');
-        $empleado2->setApellido('Gomez');
-        $empleado2->setEmail('maria.gomez@empresa.com');
-        $empleado2->setTelefono(1198765432);
-        $empleado2->setFechaIngreso(new \DateTime('2021-03-10'));
-        $empleado2->setSalario(45000);
-        $empleado2->setComision(0);
-        $empleado2->setPuesto($puesto2);
-        $manager->persist($empleado2);
-        $this->addReference('empleado-maria', $empleado2);
+        $allPuestos = [$puestoGerente, $puestoAnalista, $puestoDesarrollador];
+        $manager->flush(); 
 
-        $empleado3 = new Empleado();
-        $empleado3->setNombre('Carlos');
-        $empleado3->setApellido('Lopez');
-        $empleado3->setEmail('carlos.lopez@empresa.com');
-        $empleado3->setTelefono(1155554444);
-        $empleado3->setFechaIngreso(new \DateTime('2022-07-20'));
-        $empleado3->setSalario(65000);
-        $empleado3->setComision(0);
-        $empleado3->setPuesto($puesto3);
-        $manager->persist($empleado3);
-        $this->addReference('empleado-carlos', $empleado3);
+        
+        $provinciaBsAs = new Provincia();
+        $provinciaBsAs->setNombre('Buenos Aires');
+        $provinciaBsAs->setPais($paisArgentina);
+        $provinciaBsAs->setPoblacion($faker->numberBetween(15000000, 17000000));
+        $provinciaBsAs->setSuperficie($faker->randomFloat(2, 305000, 307000));
+        $manager->persist($provinciaBsAs);
+
+        
+        $provinciaMadrid = new Provincia();
+        $provinciaMadrid->setNombre('Madrid');
+        $provinciaMadrid->setPais($paisEspana);
+        $provinciaMadrid->setPoblacion($faker->numberBetween(6000000, 7000000));
+        $provinciaMadrid->setSuperficie($faker->randomFloat(2, 7000, 8000));
+        $manager->persist($provinciaMadrid);
+
+        
+        $manager->flush();
 
        
-        $departamento1 = new Departamento();
-        $departamento1->setNombre('Ventas');
-        $departamento1->setUbicacion($ubicacion1);
-        $departamento1->setJefe($empleado1);
-        $manager->persist($departamento1);
-        $this->addReference('departamento-ventas', $departamento1);
-
-        $departamento2 = new Departamento();
-        $departamento2->setNombre('IT');
-        $departamento2->setUbicacion($ubicacion2);
-        $departamento2->setJefe($empleado3);
-        $manager->persist($departamento2);
-        $this->addReference('departamento-it', $departamento2);
+        $allProvincias = [$provinciaBsAs, $provinciaMadrid];
 
        
-        $empleado1->setDepartamento($departamento1);
-        $empleado2->setDepartamento($departamento1);
-        $empleado2->setJefe($empleado1);
-        $empleado3->setDepartamento($departamento2);
-        $empleado3->setJefe($empleado1); 
+        for ($i = 0; $i < 30; $i++) {
+            $provincia = new Provincia();
+            $provincia->setNombre($faker->unique()->city() . ' Province');
+            $provincia->setPais($faker->randomElement($allPaises));
+            $provincia->setPoblacion($faker->numberBetween(50000, 5000000));
+            $provincia->setSuperficie($faker->randomFloat(2, 1000, 150000));
+            $manager->persist($provincia);
+            $allProvincias[] = $provincia; 
+        }
 
+       
+        $manager->flush();
+
+       
+        $ubicacionBsAs = new Ubicacion();
+        $ubicacionBsAs->setCalle('Av. Corrientes 123');
+        $ubicacionBsAs->setCodigoPostal('C1043AAB');
+        $ubicacionBsAs->setCiudad('Buenos Aires');
+        $ubicacionBsAs->setProvincia($provinciaBsAs);
+        $manager->persist($ubicacionBsAs);
+        
+        $ubicacionMadrid = new Ubicacion();
+        $ubicacionMadrid->setCalle('C/ Gran Vía 45');
+        $ubicacionMadrid->setCodigoPostal('28013');
+        $ubicacionMadrid->setCiudad('Madrid');
+        $ubicacionMadrid->setProvincia($provinciaMadrid);
+        $manager->persist($ubicacionMadrid);
+
+        
+        $allUbicaciones = [$ubicacionBsAs, $ubicacionMadrid];
+
+       
+        for ($i = 0; $i < 5; $i++) {
+            $ubicacion = new Ubicacion();
+            $ubicacion->setCalle($faker->streetAddress());
+            $ubicacion->setCodigoPostal($faker->postcode());
+            $ubicacion->setCiudad($faker->city());
+            $ubicacion->setProvincia($faker->randomElement($allProvincias)); 
+            $manager->persist($ubicacion);
+            $allUbicaciones[] = $ubicacion;
+        }
+        $manager->flush(); 
+
+        
+        $peliculaJurassic = new Pelicula();
+        $peliculaJurassic->setPelicula('Jurassic Park'); 
+        $peliculaJurassic->setAñoEstreno(1993);
+        $peliculaJurassic->setDirector($directorSpielberg);
+        $manager->persist($peliculaJurassic);
+
+        $peliculaPulp = new Pelicula();
+        $peliculaPulp->setPelicula('Pulp Fiction');
+        $peliculaPulp->setAñoEstreno(1994);
+        $peliculaPulp->setDirector($directorTarantino);
+        $manager->persist($peliculaPulp);
+        
+        
+        $allPeliculas = [$peliculaJurassic, $peliculaPulp];
+
+        
+        for ($i = 0; $i < 20; $i++) {
+            $pelicula = new Pelicula();
+            $pelicula->setPelicula($faker->unique()->sentence(3)); 
+            $pelicula->setAñoEstreno($faker->numberBetween(1980, 2024));
+            $pelicula->setDirector($faker->randomElement($allDirectores)); 
+            $manager->persist($pelicula);
+            $allPeliculas[] = $pelicula;
+        }
+        $manager->flush(); 
+
+        $empleadoJuan = new Empleado();
+        $empleadoJuan->setNombre('Juan');
+        $empleadoJuan->setApellido('Perez');
+        $empleadoJuan->setEmail('juan.perez@empresa.com');
+        $empleadoJuan->setTelefono(1123456789);
+        $empleadoJuan->setFechaIngreso(new \DateTime('2020-01-15'));
+        $empleadoJuan->setSalario(80000);
+        $empleadoJuan->setComision(0);
+        $empleadoJuan->setPuesto($puestoGerente);
+        $manager->persist($empleadoJuan);
+        $this->addReference('empleado-juan', $empleadoJuan); 
+
+        $empleadoMaria = new Empleado();
+        $empleadoMaria->setNombre('Maria');
+        $empleadoMaria->setApellido('Gomez');
+        $empleadoMaria->setEmail('maria.gomez@empresa.com');
+        $empleadoMaria->setTelefono(1198765432);
+        $empleadoMaria->setFechaIngreso(new \DateTime('2021-03-10'));
+        $empleadoMaria->setSalario(45000);
+        $empleadoMaria->setComision(0);
+        $empleadoMaria->setPuesto($puestoAnalista);
+        $manager->persist($empleadoMaria);
+        $this->addReference('empleado-maria', $empleadoMaria);
+
+        $empleadoCarlos = new Empleado();
+        $empleadoCarlos->setNombre('Carlos');
+        $empleadoCarlos->setApellido('Lopez');
+        $empleadoCarlos->setEmail('carlos.lopez@empresa.com');
+        $empleadoCarlos->setTelefono(1155554444);
+        $empleadoCarlos->setFechaIngreso(new \DateTime('2022-07-20'));
+        $empleadoCarlos->setSalario(65000);
+        $empleadoCarlos->setComision(0);
+        $empleadoCarlos->setPuesto($puestoDesarrollador);
+        $manager->persist($empleadoCarlos);
+        $this->addReference('empleado-carlos', $empleadoCarlos);
+
+        $allJefes = [$empleadoJuan, $empleadoCarlos]; 
+        $manager->flush(); 
+        
+        $departamentoVentas = new Departamento();
+        $departamentoVentas->setNombre('Ventas');
+        $departamentoVentas->setUbicacion($ubicacionBsAs);
+        $departamentoVentas->setJefe($empleadoJuan);
+        $manager->persist($departamentoVentas);
+        
+        $departamentoIT = new Departamento();
+        $departamentoIT->setNombre('IT');
+        $departamentoIT->setUbicacion($ubicacionMadrid);
+        $departamentoIT->setJefe($empleadoCarlos);
+        $manager->persist($departamentoIT);
+
+        $manager->flush(); 
+
+        $empleadoJuan->setDepartamento($departamentoVentas);
+        $empleadoMaria->setDepartamento($departamentoVentas);
+        $empleadoMaria->setJefe($empleadoJuan);
+        $empleadoCarlos->setDepartamento($departamentoIT);
+        $empleadoCarlos->setJefe($empleadoJuan); 
+
+        $manager->flush(); 
+
+        
         $historial1 = new HistorialPuesto();
-        $historial1->setEmpleado($empleado2);
-        $historial1->setPuesto($puesto2);
-        $historial1->setDepartamento($departamento1);
+        $historial1->setEmpleado($empleadoMaria);
+        $historial1->setPuesto($puestoAnalista);
+        $historial1->setDepartamento($departamentoVentas);
         $historial1->setFechaInicio(new \DateTime('2021-03-10'));
         $historial1->setFechaFin(new \DateTime('2023-01-01'));
         $manager->persist($historial1);
+        $manager->flush(); 
 
-     
-        $puestos = [$puesto1, $puesto2, $puesto3];
-        $ubicaciones = [$ubicacion1, $ubicacion2];
-        $jefes = [$empleado1, $empleado3]; 
+       
+        $allDepartamentos = [$departamentoVentas, $departamentoIT];
 
         
         for ($i = 0; $i < 10; $i++) {
             $departamento = new Departamento();
             $departamento->setNombre($faker->unique()->word() . ' Dept.');
-            $departamento->setUbicacion($faker->randomElement($ubicaciones));
-            
-            $departamento->setJefe($faker->randomElement($jefes)); 
+            $departamento->setUbicacion($faker->randomElement($allUbicaciones));
+            $departamento->setJefe($faker->randomElement($allJefes)); 
             $manager->persist($departamento);
-            $this->addReference('departamento_faker_' . $i, $departamento);
+            $allDepartamentos[] = $departamento; 
         }
         $manager->flush();
 
-
-        $fakerDepartamentos = [];
-
-       
-        for ($i = 0; $i < 10; $i++) {
-            $departamento = new Departamento();
-            $departamento->setNombre($faker->unique()->word() . ' Dept.');
-            $departamento->setUbicacion($faker->randomElement($ubicaciones));
-            $departamento->setJefe($faker->randomElement($jefes)); 
-            $manager->persist($departamento);
-            $fakerDepartamentos[] = $departamento; 
-        }
-        $manager->flush(); 
-        $allDepartamentos = array_merge($fakerDepartamentos, [$departamento1, $departamento2]);
-        
-       
         for ($i = 0; $i < 20; $i++) {
             $empleado = new Empleado();
             $empleado->setNombre($faker->firstName());
             $empleado->setApellido($faker->lastName());
             $empleado->setEmail($faker->unique()->email());
-          
             $empleado->setTelefono($faker->numberBetween(1000000000, 9999999999)); 
-            
             $empleado->setFechaIngreso($faker->dateTimeBetween('-5 years', 'now')); 
-          
             $empleado->setSalario($faker->numberBetween(25000, 90000)); 
-            $empleado->setComision($faker->numberBetween(0, 5000)); 
-            $empleado->setPuesto($faker->randomElement($puestos)); 
-            $empleado->setDepartamento($faker->randomElement($allDepartamentos)); 
-            $empleado->setJefe($faker->randomElement($jefes)); 
+            $empleado->setComision($faker->numberBetween(0, 5000));
+            $empleado->setPuesto($faker->randomElement($allPuestos));
+            $empleado->setDepartamento($faker->randomElement($allDepartamentos));
+            $empleado->setJefe($faker->randomElement($allJefes));
 
             $manager->persist($empleado);
         }
 
+       
         $manager->flush();
     }
-}
+}}

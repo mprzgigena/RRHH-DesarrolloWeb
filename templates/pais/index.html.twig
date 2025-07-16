@@ -11,8 +11,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>NOmbre</th>
-                <th>actions</th>
+                <th>NOMBRE</th>
+                <th>CRUD</th>
             </tr>
         </thead>
         <tbody>
@@ -27,13 +27,13 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Sin datos</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_pais_new') }}">Create nuevo pais</a>
+    <a href="{{ path('app_pais_new') }}">Crear nuevo pais</a>
 </div>
 </div>
 {% endblock %}

@@ -32,44 +32,51 @@ final class ProvinciaController extends AbstractController
         ]);
     }
     
-    #[Route('/provincia/reporte', name: 'provincia_reporte')] 
-    public function reporteProvinciaAction(Request $request, ProvinciaRepository 
-    $provinciaRepository): Response 
-    { 
+    #[Route('/provincia/reporte', name: 'provincia_reporte')]
+    public function reporteProvinciaAction(
+        Request $request,
+        ProvinciaRepository $provinciaRepository
+    ): Response {
         $form = $this->createForm(ProvinciaFiltroType::class); 
-        $form->handleRequest($request); 
- 
+        $form->handleRequest($request);
+
         $provincias = $provinciaRepository->findAll(); 
- 
-        if ($form->isSubmitted() && $form->isValid()) { 
-            $data = $form->getData(); 
- 
-            $pais = null; 
-            $minPoblacion = null; 
-            $maxSuperficie = null; 
- 
-            if (isset($data['pais'])) { 
-                $pais = $data['pais']; 
-            } 
- 
-            if (isset($data['minPoblacion'])) { 
-                $minPoblacion = $data['minPoblacion']; 
-            } 
- 
-            if (isset($data['maxSuperficie'])) { 
-                $maxSuperficie = $data['maxSuperficie']; 
-            } 
- 
-            $provincias = $provinciaRepository->filtrar($pais, $minPoblacion, 
-$maxSuperficie); 
-        } 
- 
+
+        dump('Formulario enviado:', $form->isSubmitted()); 
+
+      
+        if ($form->isSubmitted()) {
+            dump('Formulario válido (después de submit):', $form->isValid());
+            if (!$form->isValid()) {
+                dump('Errores del formulario (después de submit):', $form->getErrors(true)); 
+            } else {
+                $data = $form->getData(); 
+                dump('Datos recibidos en el controlador (formulario válido):', $data); 
+
+                $pais = null; 
+                $minPoblacion = null; 
+                $maxSuperficie = null;
+
+                if (isset($data['pais'])) { 
+                    $pais = $data['pais']; 
+                }
+                if (isset($data['minPoblacion'])) { 
+                    $minPoblacion = $data['minPoblacion'];
+                }
+                if (isset($data['maxSuperficie'])) {
+                    $maxSuperficie = $data['maxSuperficie'];
+                }
+                
+                $provincias = $provinciaRepository->filtrar($pais, $minPoblacion, $maxSuperficie); 
+                dump('Provincias después de filtrar:', $provincias); 
+            }
+        }
+
         return $this->render('reportes/provinciaReporte.html.twig', [ 
             'form_filtro' => $form->createView(), 
             'provincias' => $provincias, 
         ]); 
     }
-
     
     #[Route('/provincia/exportar/excel', name: 'reporte_excel')] 
     public function exportarExcel(Request $request, PaisRepository $paisRepository, 
@@ -122,7 +129,7 @@ $maxSuperficie);
         return $response; 
     } 
 
-   
+    
     #[Route('/provincia/exportar/pdf', name: 'provincia_exportar_pdf')] 
     public function exportarPdf( 
         Request $request, 

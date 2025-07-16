@@ -3,12 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Provincia;
+use App\Entity\Pais; 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Provincia>
- */
+
 class ProvinciaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -16,28 +15,32 @@ class ProvinciaRepository extends ServiceEntityRepository
         parent::__construct($registry, Provincia::class);
     }
 
-    //    /**
-    //     * @return Provincia[] Returns an array of Provincia objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * @return Provincia[] 
+     */
+    public function filtrar(?Pais $pais, ?int $minPoblacion, ?float $maxSuperficie): array 
+    { 
+        $qb = $this->createQueryBuilder('p') 
+            ->leftJoin('p.pais', 'pais') 
+            ->addSelect('pais'); 
+    
+        if ($pais) { 
+            $qb->andWhere('p.pais = :pais') 
+            ->setParameter('pais', $pais); 
+        } 
+    
+        if ($minPoblacion !== null) { 
+            $qb->andWhere('p.poblacion >= :minPoblacion') 
+            ->setParameter('minPoblacion', $minPoblacion); 
+        } 
+    
+        if ($maxSuperficie !== null) { 
+            $qb->andWhere('p.superficie <= :maxSuperficie') 
+            ->setParameter('maxSuperficie', $maxSuperficie); 
+        } 
+    
+        return $qb->getQuery()->getResult(); 
+    }
+    
 
-    //    public function findOneBySomeField($value): ?Provincia
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reporte de Provincias{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="mt-4 mb-4">Reporte de Provincias</h1>
+
+    <div class="d-flex gap-2 mb-4"> 
+        <button class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#filtroModal">
+            Filtrar
+        </button>
+
+       
+        {% set paisId = null %}
+        {% set minPoblacion = null %}
+        {% set maxSuperficie = null %}
+
+        
+        {% if form_filtro.vars.data is defined and form_filtro.vars.data %}
+            {% if form_filtro.vars.data.pais is not null %}
+                {% set paisId = form_filtro.vars.data.pais.id %}
+            {% endif %}
+            {% if form_filtro.vars.data.minPoblacion is not null %}
+                {% set minPoblacion = form_filtro.vars.data.minPoblacion %}
+            {% endif %}
+            {% if form_filtro.vars.data.maxSuperficie is not null %}
+                {% set maxSuperficie = form_filtro.vars.data.maxSuperficie %}
+            {% endif %}
+        {% endif %}
+
+        
+        <a href="{{ path('reporte_excel', { 
+            pais: paisId, 
+            minPoblacion: minPoblacion, 
+            maxSuperficie: maxSuperficie 
+        }) }}" class="btn btn-success">
+            Exportar a Excel
+        </a>
+
+       
+        <a href="{{ path('provincia_exportar_pdf', { 
+            pais: paisId, 
+            minPoblacion: minPoblacion, 
+            maxSuperficie: maxSuperficie 
+        }) }}" class="btn btn-danger">
+            Exportar a PDF
+        </a>
+    </div>
+
+    <div class="modal fade" id="filtroModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {{ form_start(form_filtro) }}
+                    <div class="modal-header">
+                        <h5 class="modal-title">Aplicar filtros</h5>
+                        <button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_row(form_filtro.pais) }}
+                        {{ form_row(form_filtro.minPoblacion) }}
+                        {{ form_row(form_filtro.maxSuperficie) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success"
+                        type="submit">Aplicar</button>
+                    </div>
+                {{ form_end(form_filtro) }}
+            </div>
+        </div>
+    </div>
+
+    {% if provincias is not empty %}
+        <h2 class="mt-5">Resultados</h2>
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Provincia</th>
+                    <th>País</th>
+                    <th>Población</th>
+                    <th>Superficie (km²)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for provincia in provincias %}
+                    <tr>
+                        <td>{{ provincia.nombre }}</td>
+                        <td>
+                            {% if provincia.pais %}
+                                {{ provincia.pais.nombre }}
+                            {% else %}
+                                <span class="text-muted">Sin país</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ provincia.poblacion }}</td>
+                        <td>{{ provincia.superficie }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="mt-4 text-muted">No hay provincias para mostrar.</p>
+    {% endif %}
+</div>
+{% endblock %}

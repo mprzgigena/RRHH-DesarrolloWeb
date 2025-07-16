@@ -1,214 +1,224 @@
-{# templates/index.html.twig #}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Página Principal de Ejercicios: MARIANO PÉREZ GIGENA</title>
-    <style>
-        /* ... Estilos de los botones ... */
-        .ejercicio-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px 0;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            text-align: center;
-            margin-right: 15px;
-            margin-bottom: 15px;
-        }
-        .ejercicio-btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
 
-    <h1>Ejercicios Prácticos Desarrollo Web</h1>
+{% extends 'base.html.twig' %} 
 
-    <h2>Hacer click para dirigirse a cada trabajo</h2>
+{% block title %}Página Principal de Ejercicios: MARIANO PÉREZ GIGENA{% endblock %}
 
-    <hr>
-        <h3>Practico 1: Routing en Symfony</h3>
-    
-    <h4>Saludo y Despedida</h4>
-    {# 
-        Enlace al Ejercicio 1 de Saludo. 
-    #}
-    <a href="{{ path('app_saludo', {'nombre': nombre}) }}" class="ejercicio-btn">
-        Ir a Trabajo Práctico 1 (Saludo)
-    </a>
+{% block body %}
+    <div class="container my-4"> 
+        <h1 class="mb-4">Ejercicios Prácticos Desarrollo Web</h1> 
 
-    {# 
-        Enlace al Ejercicio 1 de Saludo.
-    #}
-    <a href="{{ path('app_despedida', {'nombre': nombre}) }}" class="ejercicio-btn">
-        Ir a Trabajo Práctico 1 (Despedida)
-    </a>
+        <h2 class="mb-4">Hacer click para dirigirse a cada trabajo</h2>
 
- 
+        <hr class="my-4"> 
+        
+        <div class="mb-5"> 
+            <h3>Practico 1: Routing en Symfony</h3>
+            
+            <h4 class="mt-4">Saludo y Despedida</h4> 
+            <div class="d-grid gap-2 d-md-block"> 
+                <a href="{{ path('app_saludo', {'nombre': nombre}) }}" class="btn btn-primary me-2 mb-2"> 
+                    Ir a Trabajo Práctico 1 (Saludo)
+                </a>
+                <a href="{{ path('app_despedida', {'nombre': nombre}) }}" class="btn btn-primary mb-2">
+                    Ir a Trabajo Práctico 1 (Despedida)
+                </a>
+            </div>
 
-    <h4>Estado de Ánimo </h4>
-    
-    <a href="{{ path('app_estado_animo', {'nombre': nombre, 'estado': 'contento'}) }}" class="ejercicio-btn">
-        /estado/{{ nombre }}/contento
-    </a>
-    {# Sin estado opcional #}
-    <a href="{{ path('app_estado_animo', {'nombre': nombre}) }}" class="ejercicio-btn">
-        /estado/{{ nombre }} (Sin estado)
-    </a>
+            <h4 class="mt-4">Estado de Ánimo</h4>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('app_estado_animo', {'nombre': nombre, 'estado': 'contento'}) }}" class="btn btn-info me-2 mb-2"> 
+                    /estado/{{ nombre }}/contento
+                </a>
+                <a href="{{ path('app_estado_animo', {'nombre': nombre}) }}" class="btn btn-info mb-2">
+                    /estado/{{ nombre }} (Sin estado)
+                </a>
+            </div>
 
-    
+            <h4 class="mt-4">Mensaje Aleatorio</h4>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('app_aleatorio') }}" class="btn btn-secondary mb-2">
+                    Ir a /aleatorio
+                </a>
+            </div>
 
-    <h4>Mensaje Aleatorio</h4>
-    <a href="{{ path('app_aleatorio') }}" class="ejercicio-btn">
-        Ir a /aleatorio
-    </a>
+            <h4 class="mt-4">Formulario de Registro</h4>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('app_registro') }}" class="btn btn-success mb-2">
+                    Ir a /registro
+                </a>
+            </div>
 
-    
+            <h4 class="mt-4">API JSON (Usuario ficticio)</h4>
+            <p class="mb-2">La ruta requiere un ID de usuario.</p>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('api_usuario', {'id': 123}) }}" class="btn btn-warning mb-2">
+                    Ir a /api/usuario/123
+                </a>
+            </div>
 
-    <h4>Formulario de Registro</h4>
-    <a href="{{ path('app_registro') }}" class="ejercicio-btn">
-        Ir a /registro
-    </a>
+            <h4 class="mt-4">Condicionales (Mayoría de edad)</h4>
+            <p class="mb-2">La ruta requiere una edad.</p>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('app_mayoria_edad', {'edad': 25}) }}" class="btn btn-dark me-2 mb-2">
+                    /mayoria-edad/25 (Mayor)
+                </a>
+                <a href="{{ path('app_mayoria_edad', {'edad': 15}) }}" class="btn btn-dark mb-2">
+                    /mayoria-edad/15 (Menor)
+                </a>
+            </div>
+        </div> 
 
-    
+        <hr class="my-4">
 
-    <h4>API JSON (Usuario ficticio)</h4>
-    <p>La ruta requiere un ID de usuario.</p>
-    <a href="{{ path('api_usuario', {'id': 123}) }}" class="ejercicio-btn">
-        Ir a /api/usuario/123
-    </a>
+        <div class="mb-5"> 
+            <h3>Practico 2: Motor de Plantillas Twig</h3>
+            
+            <h4 class="mt-4">Listado Estudiantes (Ejercicio 1, 2 y 3)</h4>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('app_estudiantes') }}" class="btn btn-primary mb-2">
+                    Ver listado de estudiantes
+                </a>
+            </div>
+            
+            <h4 class="mt-4">Cursos agrupados (Ejercicio 4)</h4>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('ver_cursos') }}" class="btn btn-primary mb-2">
+                    Ver cursos agrupados
+                </a>
+            </div>
+            
+            <h4 class="mt-4">Herencia vertical (Ejercicio 4 - Parte iii)</h4>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('app_estudiantes_lista') }}" class="btn btn-primary mb-2">
+                    Ver lista usando herencia vertical
+                </a>
+            </div>
+        </div> 
 
- 
+        <hr class="my-4">
 
-    <h4>Condicionales (Mayoría de edad)</h4>
-    <p>La ruta requiere una edad.</p>
-    <a href="{{ path('app_mayoria_edad', {'edad': 25}) }}" class="ejercicio-btn">
-        /mayoria-edad/25 (Mayor)
-    </a>
-    <a href="{{ path('app_mayoria_edad', {'edad': 15}) }}" class="ejercicio-btn">
-        /mayoria-edad/15 (Menor)
-    </a>
+        <div class="mb-5"> 
+            <h3>Practico 3: Servicios en Symfony</h3>
 
-    <hr>
+            <h4 class="mt-4">Calculadora (Ejercicio 1)</h4>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('app_calculadora') }}" class="btn btn-primary mb-2">
+                    Ir a la Calculadora
+                </a>
+            </div>
 
-        <h3>Practico 2: Motor de Plantillas Twig</h3>
-    
-    <h4>Listado Estudiantes (Ejercicio 1, 2 y 3)</h4>
-    <a href="{{ path('app_estudiantes') }}" class="ejercicio-btn">
-        Ver listado de estudiantes
-    </a>
-    
-    <h4>Cursos agrupados (Ejercicio 4)</h4>
-    <a href="{{ path('ver_cursos') }}" class="ejercicio-btn">
-        Ver cursos agrupados
-    </a>
-    
-    <h4>Herencia vertical (Ejercicio 4 - Parte iii)</h4>
-    <a href="{{ path('app_estudiantes_lista') }}" class="ejercicio-btn">
-        Ver lista usando herencia vertical
-    </a>
+            <h4 class="mt-4">Formato de Fecha (Ejercicio 2)</h4>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('app_fecha_actual') }}" class="btn btn-primary mb-2">
+                    Ver Fecha Actual Formateada
+                </a>
+            </div>
+        </div> 
 
-    <hr>
+        <hr class="my-4">
 
-        <h3>Practico 3: Servicios en Symfony</h3>
+        <div class="mb-5"> 
+            <h3>Practico 4: Doctrine y Catálogo de Películas</h3>
+            <h4 class="mt-4">Listado, Búsqueda y Filtrado</h4>
 
-    <h4>Calculadora (Ejercicio 1)</h4>
-    <a href="{{ path('app_calculadora') }}" class="ejercicio-btn">
-        Ir a la Calculadora
-    </a>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('app_peliculas_listado') }}" class="btn btn-primary mb-2">
+                    Listar todas las películas
+                </a>
+            </div>
 
-    <h4>Formato de Fecha (Ejercicio 2)</h4>
-    <a href="{{ path('app_fecha_actual') }}" class="ejercicio-btn">
-        Ver Fecha Actual Formateada
-    </a>
+            <p class="mt-4 mb-2">
+                Ejemplos de filtrado:
+            </p>
 
-    <hr>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('app_peliculas_estreno', {'año': 1993}) }}" class="btn btn-info me-2 mb-2">
+                    Filtrar por año 1993
+                </a>
+                <a href="{{ path('app_peliculas_estreno', {'año': 2003}) }}" class="btn btn-info me-2 mb-2">
+                    Filtrar por año 2003
+                </a>
+                <a href="{{ path('app_peliculas_estreno', {'año': 2024}) }}" class="btn btn-info mb-2">
+                    Filtrar por año 2024 (Sin resultados)
+                </a>
+            </div>
+            <div class="d-grid gap-2 d-md-block mt-3">
+                <a href="{{ path('app_peliculas_letra', {'letra': 'P'}) }}" class="btn btn-warning me-2 mb-2">
+                    Buscar por letra "P"
+                </a>
+                <a href="{{ path('app_peliculas_letra', {'letra': 'Z'}) }}" class="btn btn-warning mb-2">
+                    Buscar por letra "Z" (Sin resultados)
+                </a>
+            </div>
+        </div> 
 
-<h3>Practico 4: Doctrine y Catálogo de Películas</h3>
-<h4>Listado, Búsqueda y Filtrado</h4>
+        <hr class="my-4">
 
-<a href="{{ path('app_peliculas_listado') }}" class="ejercicio-btn">
-    Listar todas las películas
-</a>
+        <div class="mb-5"> 
+            <h3>Practico 5: Formularios en Symfony (Entidad Países)</h3>
 
-   
+            <h4 class="mt-4">Gestión de Países</h4>
 
-    <p>
-        Ejemplos de filtrado:
-    </p>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('pais_index') }}" class="btn btn-primary me-2 mb-2">
+                    Listar Países
+                </a>
+                <a href="{{ path('app_pais_new') }}" class="btn btn-success mb-2">
+                    Crear Nuevo País
+                </a>
+            </div>
+        </div> 
 
-    <a href="{{ path('app_peliculas_estreno', {'año': 1993}) }}" class="ejercicio-btn">
-        Filtrar por año 1993
-    </a>
-    <a href="{{ path('app_peliculas_estreno', {'año': 2003}) }}" class="ejercicio-btn">
-        Filtrar por año 2003
-    </a>
-    <a href="{{ path('app_peliculas_estreno', {'año': 2024}) }}" class="ejercicio-btn">
-        Filtrar por año 2024 (Sin resultados)
-    </a>
+        <hr class="my-4">
 
-    <a href="{{ path('app_peliculas_letra', {'letra': 'P'}) }}" class="ejercicio-btn">
-        Buscar por letra "P"
-    </a>
-    <a href="{{ path('app_peliculas_letra', {'letra': 'Z'}) }}" class="ejercicio-btn">
-        Buscar por letra "Z" (Sin resultados)
-    </a>
+        <div class="mb-5"> 
+            <h3>Practico 6: Seguridad y Autenticación</h3>
 
-<hr>
-<h3>Practico 5: Formularios en Symfony (Entidad Países)</h3>
+            <h4 class="mt-4">Acceso a la aplicación</h4>
 
-    <h4>Gestión de Países</h4>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('app_login') }}" class="btn btn-outline-primary me-2 mb-2">
+                    Iniciar Sesión
+                </a>
+                <a href="{{ path('app_perfil') }}" class="btn btn-outline-secondary me-2 mb-2">
+                    Ver Perfil (Requiere Login)
+                </a>
+                <a href="{{ path('app_logout') }}" class="btn btn-outline-danger mb-2">
+                    Cerrar Sesión
+                </a>
+            </div>
+        </div> 
 
-    <a href="{{ path('pais_index') }}" class="ejercicio-btn">
-        Listar Países
-    </a>
-    <a href="{{ path('app_pais_new') }}" class="ejercicio-btn">
-        Crear Nuevo País
-    </a>
+        <hr class="my-4">
 
-<hr>
-<h3>Practico 6: Seguridad y Autenticación</h3>
+        <div class="mb-5">
+            <h3>Practico 7: Formularios Embebidos (Departamentos y Empleados Dinámicos)</h3>
 
-<h4>Acceso a la aplicación</h4>
+            <h4 class="mt-4">Gestión de Departamento y Empleados Dinámicos</h4>
 
-<a href="{{ path('app_login') }}" class="ejercicio-btn">
-    Iniciar Sesión
-</a>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('app_departamento_new') }}" class="btn btn-success me-2 mb-2">
+                    Crear Nuevo Departamento con Empleados
+                </a>
+                <a href="{{ path('app_departamento_index') }}" class="btn btn-primary mb-2">
+                    Ver Lista de Departamentos
+                </a>
+            </div>
+        </div> {# Fin agrupador Practico 7 #}
 
-<a href="{{ path('app_perfil') }}" class="ejercicio-btn">
-    Ver Perfil (Requiere Login)
-</a>
+        <hr class="my-4">
 
-<a href="{{ path('app_logout') }}" class="ejercicio-btn">
-    Cerrar Sesión
-</a>
+        <div class="mb-5"> 
+            <h3>Practico 8: Reportes (Excel y PDF)</h3>
 
-<hr>
-<h3>Practico 7: Formularios Embebidos (Departamentos y Empleados Dinámicos)</h3>
+            <h4 class="mt-4">Reporte de Provincias con Filtros y Exportación</h4>
 
-<h4>Gestión de Departamento y Empleados Dinámicos</h4>
+            <div class="d-grid gap-2 d-md-block">
+                <a href="{{ path('provincia_reporte') }}" class="btn btn-primary mb-2">
+                    Ir a Reportes de Provincias
+                </a>
+            </div>
+        </div> 
 
-<a href="{{ path('app_departamento_new') }}" class="ejercicio-btn">
-    Crear Nuevo Departamento con Empleados
-</a>
-<a href="{{ path('app_departamento_index') }}" class="ejercicio-btn">
-    Ver Lista de Departamentos
-</a>
-
-<hr>
-
-
-<h3>Practico 8: Reportes (Excel y PDF)</h3>
-
-<h4>Reporte de Provincias con Filtros y Exportación</h4>
-
-<a href="{{ path('provincia_reporte') }}" class="ejercicio-btn">
-    Ir a Reportes de Provincias
-</a>
-
-<hr>
-    
-</body>
-</html>
+    </div> 
+{% endblock %}

@@ -1,0 +1,6 @@
+
+doctrine_fixtures:
+    purger: ORM
+    purger_parameters:
+        drop_references: false 
+        foreign_keys_checks: false 
